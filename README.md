@@ -1,5 +1,7 @@
 # GotubeDL
 
+[![Build Status](https://travis-ci.org/sapher/gotubedl.svg?branch=master)](https://travis-ci.org/sapher/gotubedl)
+
 Youtube video downloader based on Go
 
 Heavily based on Youtube-DL but without the awesomeness
