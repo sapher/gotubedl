@@ -40,7 +40,7 @@ type BaseURL struct {
 	Value string `xml:",chardata"`
 }
 
-func ParseMPDManifest(mpdUrl string, videoResult *VideoResult) error {
+func ParseMPDManifest(mpdUrl string, video *Video) error {
 
 	// Decrypt signature
 	regSig := regexp.MustCompile(`/s/([a-fA-F0-9\.]+)`)
@@ -89,7 +89,7 @@ func ParseMPDManifest(mpdUrl string, videoResult *VideoResult) error {
 				newFormat.Height = reps.Height
 				newFormat.Fps = reps.FrameRate
 				newFormat.Asr = reps.AudioSamplingRate
-				videoResult.Formats[formatId] = newFormat
+				video.Formats[formatId] = newFormat
 			}
 		}
 	}

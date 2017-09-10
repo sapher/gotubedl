@@ -6,23 +6,15 @@ import (
 	"net/http"
 	"io/ioutil"
 	"net/url"
-	"log"
 	"strings"
 	"strconv"
 	"github.com/cavaliercoder/grab"
-	"github.com/jessevdk/go-flags"
 	"time"
+	"github.com/jessevdk/go-flags"
+	"log"
 )
 
 // Video information
-type VideoResult struct {
-	VideoId string `json:"video_id"`
-	Title string `json:"title"`
-	Author string `json:"title"`
-	Duration string `json:"duration"`
-	Formats Formats `json:"formats"`
-	ViewCount int `json:"view_count"`
-}
 
 func itoa(a string) (i int) {
 	i, err := strconv.Atoi(a)
@@ -32,7 +24,7 @@ func itoa(a string) (i int) {
 	return
 }
 
-func getFormatSpecs(videoInfo url.Values, videoResult *VideoResult) {
+func getFormatSpecs(videoInfo url.Values, video *Video) {
 
 	// parse formats
 	/**var fmtList = videoInfo.Get("fmt_list")
@@ -133,10 +125,10 @@ func getFormatSpecs(videoInfo url.Values, videoResult *VideoResult) {
 		}**/
 
 		// Set data
-		videoResult.Formats[formatId] = newFormat
+		video.Formats[formatId] = newFormat
 
 		// Generals
-		videoResult.ViewCount = extractInt("view_count")
+		video.ViewCount = extractInt("view_count")
 	}
 }
 
@@ -221,7 +213,7 @@ func download(videoUrl string) (filename string, err error) {
 		return "", err
 	}
 
-	videoResult := VideoResult {
+	videoResult := Video {
 		VideoId: videoId,
 		Title: videoInfo.Get("title"),
 		Duration: videoInfo.Get("length_seconds"),

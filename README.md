@@ -20,7 +20,7 @@ Heavily based on Youtube-DL but without the awesomeness
         -F, --list-formats   List all available formats of requested videos
         -f, --format=        Select video by format
             --json           Output only json, disable other console print
-        --pretty-json    Prettify JSON output
+            --pretty-json    Prettify JSON output
         -s, --secure         Force HTTPS
         -i, --ignore-errors  Ignore errors
         -v, --verbose        Enable verbose mode
