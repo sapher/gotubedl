@@ -10,11 +10,19 @@ Heavily based on Youtube-DL but without the awesomeness
 
 `gotubedl https://www.youtube.com/watch?v=dQw4w9WgXcQ`
 
+## Options
+
+    -h, --help                       Print this help text and exit
+    -F, --list-formats               List all available formats of requested videos
+    -f, --format                     Select video by format
+      , --json                       Output only json, disable other console print
+    -v, --verbose                    Enable verbose mode
+
 ## XMas Lists
 
-- [ ] Output video formats as JSON
+- [X] Output video formats as JSON
+- [X] Select video format to download
 - [ ] Solve slow video download
 - [ ] Output template for filename
-- [ ] Select video format to download
 - [ ] Handle download of playlist(s)
 - [ ] Download thumbnails

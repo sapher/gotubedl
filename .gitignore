@@ -1,0 +1,12 @@
+.idea
+*.webm
+*.mp3
+*.exe
+*.dylib
+*.dll
+*.so
+*.test
+*.out
+*.json
+gotubedl
+main
