@@ -3,7 +3,6 @@ package main
 import (
 	"strconv"
 	"fmt"
-	"log"
 	"regexp"
 	"strings"
 	"encoding/xml"
@@ -72,7 +71,7 @@ func ParseMPDManifest(mpdUrl string, videoResult *VideoResult) error {
 					continue
 				}
 
-				// Get correct from const formats list
+				// Get correct format from const formats list
 				formatId := strconv.Itoa(reps.Id)
 				newFormat := BaseFormats[formatId]
 
@@ -90,7 +89,7 @@ func ParseMPDManifest(mpdUrl string, videoResult *VideoResult) error {
 				newFormat.Height = reps.Height
 				newFormat.Fps = reps.FrameRate
 				newFormat.Asr = reps.AudioSamplingRate
-				videoResult.formats[formatId] = newFormat
+				videoResult.Formats[formatId] = newFormat
 			}
 		}
 	}

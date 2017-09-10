@@ -18,6 +18,7 @@ import (
 type VideoResult struct {
 	VideoId string `json:"video_id"`
 	Title string `json:"title"`
+	Author string `json:"title"`
 	Duration string `json:"duration"`
 	Formats Formats `json:"formats"`
 	ViewCount int `json:"view_count"`
@@ -221,10 +222,11 @@ func download(videoUrl string) (filename string, err error) {
 	}
 
 	videoResult := VideoResult {
-		VideoId:  videoId,
-		Title:    videoInfo.Get("Title"),
+		VideoId: videoId,
+		Title: videoInfo.Get("Title"),
 		Duration: videoInfo.Get("length_seconds"),
-		Formats:  Formats{},
+		Author: videoInfo.Get("author"),
+		Formats: Formats{},
 	}
 
 	// Get formats
@@ -274,7 +276,11 @@ func main() {
 	args, err := flags.ParseArgs(&opts, os.Args)
 	if err != nil {
 		log.Fatal(err)
-		return
+	}
+
+	// No videos to process
+	if len(args) <= 0 {
+		log.Fatal("No video to process")
 	}
 
 	// Json option disable other print

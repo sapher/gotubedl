@@ -2,13 +2,11 @@
 
 all: build
 
-build: dist
+build:
+	go build
 
 test:
 	go test
-
-dist:
-	mkdir dist
 
 run-dev:
 	go generate

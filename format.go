@@ -10,28 +10,27 @@ import (
 	"github.com/dustin/go-humanize"
 )
 
-// Video format
+// Format
 type Format struct {
 	FormatId int `json:"format_id"`
-	Ext string `json:"ext"`
+	Ext string `json:"ext"`					// File extension
 	Width int `json:"width"`
 	Height int `json:"height"`
-	Acodec string `json:"acodec"`
-	Vcodec string `json:"vcodec"`
-	Format_note string `json:"format_note"`
+	Acodec string `json:"acodec"`			// Audio codec
+	Vcodec string `json:"vcodec"`			// Video codec
+	Format_note string `json:"format_note"`	// Format description
 	Preference int `json:"preference"`
-	Container string `json:"container"`
-	Fps int `json:"fps"`
-	Abr int `json:"abr"`
-	Asr int `json:"asr"`
-	// ----
+	Container string `json:"container"`		// Container
+	Fps int `json:"fps"`					// Framerate
+	Abr int `json:"abr"`					// Audio bitrate
+	Asr int `json:"asr"`					// Sampling rate
 	Resolution string `json:"resolution"`
 	Url string `json:"url"`
-	Filesize uint64 `json:"filesize"`
+	Filesize uint64 `json:"filesize"`		// Filesize
 	Tbr int `json:"tbr"`
 }
 
-// Formats
+// Array of formats, with formatId as key
 type Formats map[string]Format
 
 // BasedFormats
@@ -132,7 +131,7 @@ var BaseFormats = Formats {
 }
 
 
-// Print available formats in the console
+// Print formats
 func PrintFormats(formats Formats) {
 
 	// Headers
@@ -190,17 +189,18 @@ func PrintFormats(formats Formats) {
 		fmt.Println(fLines)
 	} else if opts.Json {
 
-		var _f []Format
-		for _, v := range formats {
-			_f = append(_f, v)
+		// flatten format map
+		var formats []Format
+		for _, format := range formats {
+			formats = append(formats, format)
 		}
 
 		// Decide if output pretty json or not
 		var jsonOutput []byte
 		if opts.PrettyJson {
-			jsonOutput, _ = json.MarshalIndent(_f, "", "\t")
+			jsonOutput, _ = json.MarshalIndent(formats, "", "\t")
 		} else {
-			jsonOutput, _ = json.Marshal(_f)
+			jsonOutput, _ = json.Marshal(formats)
 		}
 
 		fmt.Println(string(jsonOutput))

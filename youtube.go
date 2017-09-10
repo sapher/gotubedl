@@ -17,7 +17,7 @@ func GetVideoInfo(videoId string) (url.Values, error) {
 
 	// QueryString
 	query := url.Values{
-		"VideoId": { videoId },
+		"video_id": { videoId },
 		"el": { "info" },
 		"ps": { "default" },
 		"eurl": { "" },
