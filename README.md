@@ -14,11 +14,19 @@ Heavily based on Youtube-DL but without the awesomeness
 
 ## Options
 
-    -h, --help                       Print this help text and exit
-    -F, --list-formats               List all available formats of requested videos
-    -f, --format                     Select video by format
-      , --json                       Output only json, disable other console print
-    -v, --verbose                    Enable verbose mode
+    gotubedl [OPTIONS]
+
+    Application Options:
+        -F, --list-formats   List all available formats of requested videos
+        -f, --format=        Select video by format
+            --json           Output only json, disable other console print
+        --pretty-json    Prettify JSON output
+        -s, --secure         Force HTTPS
+        -i, --ignore-errors  Ignore errors
+        -v, --verbose        Enable verbose mode
+
+    Help Options:
+        -h, --help           Show this help message
 
 ## XMas Lists
 
@@ -28,3 +36,5 @@ Heavily based on Youtube-DL but without the awesomeness
 - [ ] Output template for filename
 - [ ] Handle download of playlist(s)
 - [ ] Download thumbnails
+- [ ] Better progress bars
+- [ ] Force HTTPS

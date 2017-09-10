@@ -223,7 +223,7 @@ func download(videoUrl string) (filename string, err error) {
 
 	videoResult := VideoResult {
 		VideoId: videoId,
-		Title: videoInfo.Get("Title"),
+		Title: videoInfo.Get("title"),
 		Duration: videoInfo.Get("length_seconds"),
 		Author: videoInfo.Get("author"),
 		Formats: Formats{},
@@ -264,6 +264,8 @@ type Options struct {
 	Format int `short:"f" long:"format" description:"Select video by format" require:"true"`
 	Json bool `long:"json" description:"Output only json, disable other console print"`
 	PrettyJson bool `long:"pretty-json" description:"Prettify JSON output"`
+	Secure bool `short:"s" long:"secure" description:"Force HTTPS"`
+	IgnoreErrors bool `short:"i" long:"ignore-errors" description:"Ignore errors"`
 	Verbose bool `short:"v" long:"verbose" description:"Enable verbose mode"`
 }
 

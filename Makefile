@@ -3,11 +3,11 @@
 all: build
 
 build:
-	go build
+	@go build
 
 test:
-	go test
+	@go test
 
 run-dev:
-	go generate
-	go build
+	@go generate
+	@go build
