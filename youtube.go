@@ -1,22 +1,22 @@
 package main
 
 import (
-	"regexp"
 	"net/url"
+	"regexp"
 )
 
 type Playlist struct {
-	Title string `json:"title"`
+	Title  string  `json:"title"`
 	Videos []Video `json:"videos"`
 }
 
 type Video struct {
-	VideoId string `json:"video_id"`
-	Title string `json:"title"`
-	Author string `json:"title"`
-	Duration string `json:"duration"`
-	Formats Formats `json:"formats"`
-	ViewCount int `json:"view_count"`
+	VideoId   string  `json:"video_id"`
+	Title     string  `json:"title"`
+	Author    string  `json:"title"`
+	Duration  string  `json:"duration"`
+	Formats   Formats `json:"formats"`
+	ViewCount int     `json:"view_count"`
 }
 
 // Extract video id from youtube's url
@@ -63,12 +63,12 @@ func GetVideoInfo(videoId string) (url.Values, error) {
 
 	// QueryString
 	query := url.Values{
-		"video_id": { videoId },
-		"el": { "info" },
-		"ps": { "default" },
-		"eurl": { "" },
-		"gl": { "US" },
-		"hl": { "en" },
+		"video_id": {videoId},
+		"el":       {"info"},
+		"ps":       {"default"},
+		"eurl":     {""},
+		"gl":       {"US"},
+		"hl":       {"en"},
 	}
 
 	infoVideoUrl := "http://www.youtube.com/get_video_info?" + query.Encode()

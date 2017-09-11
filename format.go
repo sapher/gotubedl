@@ -1,40 +1,40 @@
 package main
 
 import (
-	"strings"
-	"github.com/ryanuber/columnize"
-	"fmt"
 	"encoding/json"
-	"strconv"
-	"sort"
+	"fmt"
 	"github.com/dustin/go-humanize"
+	"github.com/ryanuber/columnize"
+	"sort"
+	"strconv"
+	"strings"
 )
 
 // Format
 type Format struct {
-	FormatId int `json:"format_id"`
-	Ext string `json:"ext"`					// File extension
-	Width int `json:"width"`
-	Height int `json:"height"`
-	Acodec string `json:"acodec"`			// Audio codec
-	Vcodec string `json:"vcodec"`			// Video codec
-	Format_note string `json:"format_note"`	// Format description
-	Preference int `json:"preference"`
-	Container string `json:"container"`		// Container
-	Fps int `json:"fps"`					// Framerate
-	Abr int `json:"abr"`					// Audio bitrate
-	Asr int `json:"asr"`					// Sampling rate
-	Resolution string `json:"resolution"`
-	Url string `json:"url"`
-	Filesize uint64 `json:"filesize"`		// Filesize
-	Tbr int `json:"tbr"`
+	FormatId    int    `json:"format_id"`
+	Ext         string `json:"ext"`			// File extension
+	Width       int    `json:"width"`
+	Height      int    `json:"height"`
+	Acodec      string `json:"acodec"`      // Audio codec
+	Vcodec      string `json:"vcodec"`      // Video codec
+	Format_note string `json:"format_note"` // Format description
+	Preference  int    `json:"preference"`
+	Container   string `json:"container"`	// Container
+	Fps         int    `json:"fps"`       	// Framerate
+	Abr         int    `json:"abr"`       	// Audio bitrate
+	Asr         int    `json:"asr"`       	// Sampling rate
+	Resolution  string `json:"resolution"`
+	Url         string `json:"url"`
+	Filesize    uint64 `json:"filesize"` 	// Filesize
+	Tbr         int    `json:"tbr"`
 }
 
 // Array of formats, with formatId as key
 type Formats map[string]Format
 
 // BasedFormats
-var BaseFormats = Formats {
+var BaseFormats = Formats{
 	"5":  {Ext: "flv", Width: 400, Height: 240, Acodec: "mp3", Abr: 64, Vcodec: "h263"},
 	"6":  {Ext: "flv", Width: 450, Height: 270, Acodec: "mp3", Abr: 64, Vcodec: "h263"},
 	"13": {Ext: "3gp", Acodec: "aac", Vcodec: "mp4v"},
@@ -55,21 +55,21 @@ var BaseFormats = Formats {
 	"78": {Ext: "mp4", Width: 854, Height: 480, Acodec: "aac", Abr: 128, Vcodec: "h264"},
 
 	// 3D videos
-	"82": {Ext: "mp4", Height: 360, Format_note: "3D", Acodec: "aac", Abr: 128, Vcodec: "h264", Preference: -20},
-	"83": {Ext: "mp4", Height: 480, Format_note: "3D", Acodec: "aac", Abr: 128, Vcodec: "h264", Preference: -20},
-	"84": {Ext: "mp4", Height: 720, Format_note: "3D", Acodec: "aac", Abr: 192, Vcodec: "h264", Preference: -20},
-	"85": {Ext: "mp4", Height: 1080, Format_note: "3D", Acodec: "aac", Abr: 192, Vcodec: "h264", Preference: -20},
+	"82":  {Ext: "mp4", Height: 360, Format_note: "3D", Acodec: "aac", Abr: 128, Vcodec: "h264", Preference: -20},
+	"83":  {Ext: "mp4", Height: 480, Format_note: "3D", Acodec: "aac", Abr: 128, Vcodec: "h264", Preference: -20},
+	"84":  {Ext: "mp4", Height: 720, Format_note: "3D", Acodec: "aac", Abr: 192, Vcodec: "h264", Preference: -20},
+	"85":  {Ext: "mp4", Height: 1080, Format_note: "3D", Acodec: "aac", Abr: 192, Vcodec: "h264", Preference: -20},
 	"100": {Ext: "webm", Height: 360, Format_note: "3D", Acodec: "vorbis", Abr: 128, Vcodec: "vp8", Preference: -20},
 	"101": {Ext: "webm", Height: 480, Format_note: "3D", Acodec: "vorbis", Abr: 192, Vcodec: "vp8", Preference: -20},
 	"102": {Ext: "webm", Height: 720, Format_note: "3D", Acodec: "vorbis", Abr: 192, Vcodec: "vp8", Preference: -20},
 
 	// Apple HTTP Live Streaming
-	"91": {Ext: "mp4", Height: 144, Format_note: "HLS", Acodec: "aac", Abr: 48, Vcodec: "h264", Preference: -10},
-	"92": {Ext: "mp4", Height: 240, Format_note: "HLS", Acodec: "aac", Abr: 48, Vcodec: "h264", Preference: -10},
-	"93": {Ext: "mp4", Height: 360, Format_note: "HLS", Acodec: "aac", Abr: 128, Vcodec: "h264", Preference: -10},
-	"94": {Ext: "mp4", Height: 480, Format_note: "HLS", Acodec: "aac", Abr: 128, Vcodec: "h264", Preference: -10},
-	"95": {Ext: "mp4", Height: 720, Format_note: "HLS", Acodec: "aac", Abr: 256, Vcodec: "h264", Preference: -10},
-	"96": {Ext: "mp4", Height: 1080, Format_note: "HLS", Acodec: "aac", Abr: 256, Vcodec: "h264", Preference: -10},
+	"91":  {Ext: "mp4", Height: 144, Format_note: "HLS", Acodec: "aac", Abr: 48, Vcodec: "h264", Preference: -10},
+	"92":  {Ext: "mp4", Height: 240, Format_note: "HLS", Acodec: "aac", Abr: 48, Vcodec: "h264", Preference: -10},
+	"93":  {Ext: "mp4", Height: 360, Format_note: "HLS", Acodec: "aac", Abr: 128, Vcodec: "h264", Preference: -10},
+	"94":  {Ext: "mp4", Height: 480, Format_note: "HLS", Acodec: "aac", Abr: 128, Vcodec: "h264", Preference: -10},
+	"95":  {Ext: "mp4", Height: 720, Format_note: "HLS", Acodec: "aac", Abr: 256, Vcodec: "h264", Preference: -10},
+	"96":  {Ext: "mp4", Height: 1080, Format_note: "HLS", Acodec: "aac", Abr: 256, Vcodec: "h264", Preference: -10},
 	"132": {Ext: "mp4", Height: 240, Format_note: "HLS", Acodec: "aac", Abr: 48, Vcodec: "h264", Preference: -10},
 	"151": {Ext: "mp4", Height: 72, Format_note: "HLS", Acodec: "aac", Abr: 24, Vcodec: "h264", Preference: -10},
 
@@ -79,7 +79,7 @@ var BaseFormats = Formats {
 	"135": {Ext: "mp4", Height: 480, Format_note: "DASH video", Vcodec: "h264"},
 	"136": {Ext: "mp4", Height: 720, Format_note: "DASH video", Vcodec: "h264"},
 	"137": {Ext: "mp4", Height: 1080, Format_note: "DASH video", Vcodec: "h264"},
-	"138": {Ext: "mp4", Format_note: "DASH video", Vcodec: "h264"},  // Height can vary (https://github.com/rg3/youtube-dl/issues/4559)
+	"138": {Ext: "mp4", Format_note: "DASH video", Vcodec: "h264"}, // Height can vary (https://github.com/rg3/youtube-dl/issues/4559)
 	"160": {Ext: "mp4", Height: 144, Format_note: "DASH video", Vcodec: "h264"},
 	"212": {Ext: "mp4", Height: 480, Format_note: "DASH video", Vcodec: "h264"},
 	"264": {Ext: "mp4", Height: 1440, Format_note: "DASH video", Vcodec: "h264"},
@@ -130,16 +130,15 @@ var BaseFormats = Formats {
 	"251": {Ext: "webm", Format_note: "DASH audio", Acodec: "opus", Abr: 160},
 }
 
-
 // Print formats
 func PrintFormats(formats Formats) {
 
 	// Headers
-	headers := []string {
+	headers := []string{
 		"Format", "Extension", "Video", "Audio", "Resolution", "Size", "Note", "All",
 	}
 	fHeaders := strings.Join(headers, " | ")
-	lines := []string{ fHeaders, }
+	lines := []string{fHeaders}
 
 	// Sort for prettifying outputs
 	keys := make([]int, 0, len(formats))
@@ -169,7 +168,7 @@ func PrintFormats(formats Formats) {
 		}
 
 		// Build string
-		line := []string {
+		line := []string{
 			formatId,
 			format.Ext,
 			format.Vcodec,

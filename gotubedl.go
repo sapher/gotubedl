@@ -1,17 +1,17 @@
 package main
 
 import (
-	"os"
 	"fmt"
-	"net/http"
-	"io/ioutil"
-	"net/url"
-	"strings"
-	"strconv"
 	"github.com/cavaliercoder/grab"
-	"time"
 	"github.com/jessevdk/go-flags"
+	"io/ioutil"
 	"log"
+	"net/http"
+	"net/url"
+	"os"
+	"strconv"
+	"strings"
+	"time"
 )
 
 // Video information
@@ -44,7 +44,7 @@ func getFormatSpecs(videoInfo url.Values, video *Video) {
 	var fmtAdaptive = videoInfo.Get("adaptive_fmts")
 
 	// Put all formats in the same string
-	fmtStrs := strings.Join([]string{ fmtStreamMap, fmtAdaptive }, ",")
+	fmtStrs := strings.Join([]string{fmtStreamMap, fmtAdaptive}, ",")
 
 	// Iterate through all format strings
 	for _, fmtStr := range strings.Split(fmtStrs, ",") {
@@ -213,12 +213,12 @@ func download(videoUrl string) (filename string, err error) {
 		return "", err
 	}
 
-	videoResult := Video {
-		VideoId: videoId,
-		Title: videoInfo.Get("title"),
+	videoResult := Video{
+		VideoId:  videoId,
+		Title:    videoInfo.Get("title"),
 		Duration: videoInfo.Get("length_seconds"),
-		Author: videoInfo.Get("author"),
-		Formats: Formats{},
+		Author:   videoInfo.Get("author"),
+		Formats:  Formats{},
 	}
 
 	// Get formats
@@ -243,7 +243,7 @@ func download(videoUrl string) (filename string, err error) {
 	// Build filename
 	selectedFormat := strconv.Itoa(opts.Format)
 	format := videoResult.Formats[selectedFormat]
-	filename = videoResult.Title + "." + format.Ext;
+	filename = videoResult.Title + "." + format.Ext
 
 	downloadVideo(format.Url, filename)
 
@@ -252,13 +252,13 @@ func download(videoUrl string) (filename string, err error) {
 
 // Program options
 type Options struct {
-	FormatList bool `short:"F" long:"list-formats" description:"List all available formats of requested videos"`
-	Format int `short:"f" long:"format" description:"Select video by format" require:"true"`
-	Json bool `long:"json" description:"Output only json, disable other console print"`
-	PrettyJson bool `long:"pretty-json" description:"Prettify JSON output"`
-	Secure bool `short:"s" long:"secure" description:"Force HTTPS"`
+	FormatList   bool `short:"F" long:"list-formats" description:"List all available formats of requested videos"`
+	Format       int  `short:"f" long:"format" description:"Select video by format" require:"true"`
+	Json         bool `long:"json" description:"Output only json, disable other console print"`
+	PrettyJson   bool `long:"pretty-json" description:"Prettify JSON output"`
+	Secure       bool `short:"s" long:"secure" description:"Force HTTPS"`
 	IgnoreErrors bool `short:"i" long:"ignore-errors" description:"Ignore errors"`
-	Verbose bool `short:"v" long:"verbose" description:"Enable verbose mode"`
+	Verbose      bool `short:"v" long:"verbose" description:"Enable verbose mode"`
 }
 
 // Global program options

@@ -1,11 +1,11 @@
 package main
 
 import (
-	"strconv"
+	"encoding/xml"
 	"fmt"
 	"regexp"
+	"strconv"
 	"strings"
-	"encoding/xml"
 )
 
 type MPD struct {
@@ -13,31 +13,31 @@ type MPD struct {
 }
 
 type Period struct {
-	Duration string `xml:"duration,attr"`
+	Duration       string          `xml:"duration,attr"`
 	AdaptationSets []AdaptationSet `xml:"AdaptationSet"`
 }
 
 type AdaptationSet struct {
-	Id int `xml:"id,attr"`
-	MimeType string `xml:"mimeType,attr"`
-	SubsegmentAlignment bool `xml:"subsegmentAlignment,attr"`
-	Representations []Representation `xml:"Representation"`
+	Id                  int              `xml:"id,attr"`
+	MimeType            string           `xml:"mimeType,attr"`
+	SubsegmentAlignment bool             `xml:"subsegmentAlignment,attr"`
+	Representations     []Representation `xml:"Representation"`
 }
 
 type Representation struct {
-	Id int `xml:"id,attr"`
-	Codecs string `xml:"codecs,attr"`
-	AudioSamplingRate int `xml:"audioSamplingRate,attr"`
-	Bandwidth int `xml:"bandwidth,attr"`
-	BaseURL BaseURL `xml:"BaseURL"`
-	Width int `xml:"width,attr"`
-	Height int `xml:"height,attr"`
-	FrameRate int `xml:"frameRate,attr"`
+	Id                int     `xml:"id,attr"`
+	Codecs            string  `xml:"codecs,attr"`
+	AudioSamplingRate int     `xml:"audioSamplingRate,attr"`
+	Bandwidth         int     `xml:"bandwidth,attr"`
+	BaseURL           BaseURL `xml:"BaseURL"`
+	Width             int     `xml:"width,attr"`
+	Height            int     `xml:"height,attr"`
+	FrameRate         int     `xml:"frameRate,attr"`
 }
 
 type BaseURL struct {
-	ContentLength int `xml:"contentLength,attr"`
-	Value string `xml:",chardata"`
+	ContentLength int    `xml:"contentLength,attr"`
+	Value         string `xml:",chardata"`
 }
 
 func ParseMPDManifest(mpdUrl string, video *Video) error {
@@ -47,7 +47,7 @@ func ParseMPDManifest(mpdUrl string, video *Video) error {
 	match := regSig.FindStringSubmatch(mpdUrl)
 	if len(match) > 1 {
 		sig := match[1]
-		mpdUrl = strings.Replace(mpdUrl, match[0], "/signature/" + sig, 1)
+		mpdUrl = strings.Replace(mpdUrl, match[0], "/signature/"+sig, 1)
 	}
 
 	// Get manifest
